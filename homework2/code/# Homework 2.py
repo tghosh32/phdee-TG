@@ -115,4 +115,14 @@ beta_statsmodels = results.params.reshape(-1, 1)
 
 print(f"OLS by statsmodels: {beta_statsmodels}")
 
-# %%
+# Convert resuts to Dataframe
+ols_coeffs = pd.DataFrame(
+    {
+        "Variable": ["Intercept", "Sqft", "Retrofit", "Temperature"],
+        "OLS by Hand": beta_ols_hand.flatten(),
+        "OLS by Simulation": beta_simulated.flatten(),
+        "OLS by StatsModels": beta_statsmodels.flatten(),
+    }
+)
+
+ols_coeffs.to_latex(f"{output_dir}/ols_coefficients.tex", index=False)
