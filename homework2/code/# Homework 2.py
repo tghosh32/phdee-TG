@@ -21,14 +21,17 @@ np.random.seed(6578103)
 # Reading data
 eer_prog = pd.read_csv(os.path.join(input_dir, 'kwh.csv'))
 
+# %% 
 # Split into treatment and control groups
 control = eer_prog[eer_prog['retrofit'] == 0]
 treatment = eer_prog[eer_prog['retrofit'] == 1]
 
+# %% 
 # Variables to compare
 variables = ['electricity', 'sqft', 'temp']
 rows = []
 
+# %% 
 # Generate the statistics for each variable
 for var in variables:
     mean_control = control[var].mean()
@@ -58,6 +61,7 @@ balance_df = pd.DataFrame(
     columns=["Variable", "Control", "Treatment", "P-value"]
 )
 
+# %% 
 # Export as LaTeX table
 balance_tab = balance_df.to_latex(index=False, escape=False, multicolumn=False)
 output_path = os.path.join(output_dir, "balance_table.tex")
@@ -65,6 +69,7 @@ output_path = os.path.join(output_dir, "balance_table.tex")
 with open(output_path, "w") as f:
     f.write(balance_tab)
 
+# %% 
 # Plot histograms
 sns.kdeplot(control['electricity'], label='Control Group', shade=True, color='blue')
 sns.kdeplot(treatment['electricity'], label='Treatment Group', shade=True, color='red')
@@ -75,3 +80,5 @@ plt.legend(title='Group')
 output_path = os.path.join(output_dir, 'kdplot_electricity_use.pdf')
 plt.savefig(output_path)
 plt.show()
+
+# %%
