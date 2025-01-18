@@ -1,3 +1,4 @@
+# %% 
 # Homework 2
 
 # Importing libraries
@@ -9,13 +10,14 @@ import seaborn as sns
 import statsmodels.api as sm
 from scipy.stats import ttest_ind
 
-
+# %% 
 # Setting directories and seed
 input_dir = r'/Users/tannishthaghosh/GaTech Dropbox/Tannishtha Ghosh/EE/phdee-TG/homework2/input'
 output_dir = r'/Users/tannishthaghosh/GaTech Dropbox/Tannishtha Ghosh/EE/phdee-TG/homework2/output'
 
 np.random.seed(6578103)
 
+# %% 
 # Reading data
 eer_prog = pd.read_csv(os.path.join(input_dir, 'kwh.csv'))
 
@@ -63,6 +65,13 @@ output_path = os.path.join(output_dir, "balance_table.tex")
 with open(output_path, "w") as f:
     f.write(balance_tab)
 
+# Plot histograms
+sns.kdeplot(control['electricity'], label='Control Group', shade=True, color='blue')
+sns.kdeplot(treatment['electricity'], label='Treatment Group', shade=True, color='red')
+plt.xlabel('Electricity Use')
+plt.ylabel('Density')
+plt.legend(title='Group')
 
-
-
+output_path = os.path.join(output_dir, 'kdplot_electricity_use.pdf')
+plt.savefig(output_path)
+plt.show()
