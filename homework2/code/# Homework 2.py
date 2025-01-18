@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import statsmodels.api as sm
 from scipy.stats import ttest_ind
+from scipy.optimize import minimize
 
 # %% 
 # Setting directories and seed
@@ -80,5 +81,38 @@ plt.legend(title='Group')
 output_path = os.path.join(output_dir, 'kdplot_electricity_use.pdf')
 plt.savefig(output_path)
 plt.show()
+
+# %%
+# Fit a linear regression model
+
+Y = eer_prog['electricity'].values.reshape(-1, 1)
+X = eer_prog[['sqft', 'retrofit', 'temp']].values
+X = np.hstack([np.ones((X.shape[0], 1)), X]) # Add constant
+
+# # --- Method 1: OLS by Hand ---
+XtX = np.dot(X.T, X)  # X'X
+XtY = np.dot(X.T, Y)  # X'Y
+beta_ols_hand = np.dot(np.linalg.inv(XtX), XtY)  # (X'X)^(-1)X'Y
+
+print(f"OLS by Hand: {beta_ols_hand}")
+
+# # --- Method 2: OLS by Simulated Least Squares ---
+def sum_squared_residuals(beta, X, Y):
+    residuals = Y - np.dot(X, beta.reshape(-1, 1))
+    return np.sum(residuals**2)
+
+beta_initial = np.zeros(X.shape[1])
+
+result = minimize(sum_squared_residuals, beta_initial, args=(X, Y), method='BFGS')
+beta_simulated = result.x.reshape(-1, 1)
+
+print(f"OLS by Simulated Least Squares: {beta_simulated}")
+
+# # --- Method 3: OLS by statsmodels ---
+model = sm.OLS(Y, X)
+results = model.fit()
+beta_statsmodels = results.params.reshape(-1, 1)
+
+print(f"OLS by statsmodels: {beta_statsmodels}")
 
 # %%
