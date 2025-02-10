@@ -1,0 +1,19 @@
+		(1)	(2)
+		OLS Fixed Effects	OLS Fixed Effects
+VARIABLES	LABELS	Within-Transformation	Within-Transformation
+			
+treated_post	Treatment x Post	-8,085***	
+		(2,619)	
+shrimp	Shrimp	1.552***	
+		(0.178)	
+salmon	Salmon	-0.680	
+		(1.125)	
+treated_post_within	Treatment x Post (mean)		-8,085***
+			(2,564)
+shrimp_within	Shrimp (mean)		1.552***
+			(0.175)
+salmon_within	Salmon (mean)		-0.680
+			(1.101)
+			
+Observations		1,200	1,200
+R-squared		0.996	0.428
