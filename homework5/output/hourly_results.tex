@@ -1,0 +1,28 @@
+{
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\begin{tabular}{l*{1}{c}}
+\hline\hline
+                    &\multicolumn{1}{c}{(1)}\\
+                    &\multicolumn{1}{c}{Energy Consumption (kWh)}\\
+\hline
+Treatment           &     -0.0434\sym{***}\\
+                    &  (0.000232)         \\
+[1em]
+Temperature (F)     &     0.00461\sym{***}\\
+                    & (0.0000121)         \\
+[1em]
+Precipitation (in)  &   -0.000644         \\
+                    &   (0.00200)         \\
+[1em]
+Relative Humidity (%)&     0.00230\sym{***}\\
+                    &(0.00000576)         \\
+[1em]
+Constant            &       0.539\sym{***}\\
+                    &   (0.00111)         \\
+\hline
+Observations        &      720000         \\
+\hline\hline
+\multicolumn{2}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{2}{l}{\footnotesize \sym{*} \(p<0.1\), \sym{**} \(p<0.05\), \sym{***} \(p<0.01\)}\\
+\end{tabular}
+}
