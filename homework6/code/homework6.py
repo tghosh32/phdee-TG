@@ -25,9 +25,6 @@ model = sm.OLS(y, X)
 result = model.fit()
 print(result.summary())
 
-
-
-
 # %%
 # IV by hand
 carsales['$weight^2$'] = carsales['weight']**2
@@ -78,6 +75,20 @@ run_2sls(carsales, instruments)
 # %%
 # IV GMM
 iv_gmm_model = IVGMM.from_formula('price ~ 1 + car + [mpg ~ weight]', data=carsales).fit()
-print(iv_gmm_model.summary)
+results = [
+    f"{iv_gmm_model.params['car']:.2f}",
+    f"({iv_gmm_model.std_errors['car']:.2f})",
+    f"{iv_gmm_model.params['mpg']:.2f}",
+    f"({iv_gmm_model.std_errors['mpg']:.2f})",
+    ""
+]
+
+results_df = pd.DataFrame(results, index=["$Car$", "", "$Mpg$", "", ""])
+results_df.columns = ["Weight"]
+latex_table = results_df.to_latex(index=True, escape=False)
+output_path = os.path.join(output_dir, "IV_GMM.tex")
+with open(output_path, "w") as f:
+    f.write(latex_table)
+
 
 # %%
