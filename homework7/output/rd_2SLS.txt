@@ -1,0 +1,14 @@
+		(1)
+VARIABLES	LABELS	price
+		
+mpg	mpg	158.3***
+		(29.55)
+car	car	-4,743***
+		(355.8)
+Constant	Constant	17,407***
+		(848.2)
+		
+Observations		1,000
+R-squared		0.096
+Robust standard errors in parentheses		
+*** p<0.01, ** p<0.05, * p<0.1		
